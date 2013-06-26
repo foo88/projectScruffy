@@ -1,1 +1,1 @@
-foo
+Readme for project Scruffy
