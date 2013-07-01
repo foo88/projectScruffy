@@ -14,8 +14,14 @@ namespace Scruffy
     /// <summary>
     /// This is the main type for your game
     /// </summary>
+
     public class Main : Microsoft.Xna.Framework.Game
     {
+        //TODO: remove this. This is only for demo purposes. This is also horrendous coding. Please don't do this ever... :D
+        int x = 0;
+        int y = 0;
+        private Texture2D shuttle;
+        private Texture2D myMouse;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -48,6 +54,11 @@ namespace Scruffy
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            //TODO: remove this. This is only for demo purposes
+            //load test image from memory
+            shuttle = Content.Load<Texture2D>("sprites/shuttle");
+            myMouse = Content.Load<Texture2D>("sprites/mouse");
         }
 
         /// <summary>
@@ -72,6 +83,16 @@ namespace Scruffy
 
             // TODO: Add your update logic here
 
+            //TODO: remove this. This is only for demo purposes
+            var mouseState = Mouse.GetState();
+            if (mouseState.LeftButton == ButtonState.Pressed)
+            {
+                var mousePos = new Point(mouseState.X, mouseState.Y);
+                x = mousePos.X - shuttle.Width/2;
+                y = mousePos.Y - shuttle.Height/2;
+            }
+
+
             base.Update(gameTime);
         }
 
@@ -81,9 +102,16 @@ namespace Scruffy
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            var mouseState = Mouse.GetState();
             GraphicsDevice.Clear(Color.ForestGreen);
 
             // TODO: Add your drawing code here
+
+            //TODO: remove this. This is only for demo purposes
+            spriteBatch.Begin();
+            spriteBatch.Draw(shuttle, new Vector2(x, y), Color.White);
+            spriteBatch.Draw(myMouse, new Vector2(mouseState.X, mouseState.Y), Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
