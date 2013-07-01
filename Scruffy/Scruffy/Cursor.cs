@@ -24,12 +24,17 @@ namespace Scruffy
             height = mHeight;
         }
 
-        public void loadContent(ContentManager myContent)
+        public Vector2 getPosition()
         {
-            mouseSprite = myContent.Load<Texture2D>("sprites/mouse");
+            return position;
         }
 
-        public void update()
+        public void loadContent(ContentManager myContent)
+        {
+            mouseSprite = myContent.Load<Texture2D>(imagePath);
+        }
+
+        public void Update()
         {
             var mouseState = Mouse.GetState();
             if (mouseState.X < 0)

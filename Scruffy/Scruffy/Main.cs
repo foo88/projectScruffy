@@ -21,9 +21,12 @@ namespace Scruffy
         int x = 0;
         int y = 0;
         private Texture2D shuttle;
-        private Texture2D myMouse;
+       
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        private Cursor cursor;
+        private Model ship;
 
         public Main()
         {
@@ -41,6 +44,8 @@ namespace Scruffy
         {
             // TODO: Add your initialization logic here
 
+            cursor = new Cursor("sprites/mouse", graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height);
+            ship = new Model("sprites/shuttle", cursor);
             base.Initialize();
         }
 
@@ -57,8 +62,8 @@ namespace Scruffy
 
             //TODO: remove this. This is only for demo purposes
             //load test image from memory
-            shuttle = Content.Load<Texture2D>("sprites/shuttle");
-            myMouse = Content.Load<Texture2D>("sprites/mouse");
+            cursor.loadContent(Content);
+            ship.loadContent(Content);
         }
 
         /// <summary>
@@ -84,13 +89,9 @@ namespace Scruffy
             // TODO: Add your update logic here
 
             //TODO: remove this. This is only for demo purposes
-            var mouseState = Mouse.GetState();
-            if (mouseState.LeftButton == ButtonState.Pressed)
-            {
-                var mousePos = new Point(mouseState.X, mouseState.Y);
-                x = mousePos.X - shuttle.Width/2;
-                y = mousePos.Y - shuttle.Height/2;
-            }
+            cursor.Update();
+            ship.Update();
+           
 
 
             base.Update(gameTime);
@@ -109,8 +110,8 @@ namespace Scruffy
 
             //TODO: remove this. This is only for demo purposes
             spriteBatch.Begin();
-            spriteBatch.Draw(shuttle, new Vector2(x, y), Color.White);
-            spriteBatch.Draw(myMouse, new Vector2(mouseState.X, mouseState.Y), Color.White);
+            ship.Draw(spriteBatch);
+            cursor.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
